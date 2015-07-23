@@ -7,14 +7,23 @@ cmake_minimum_required(VERSION 3.1)
 
 function(FindBoost)
   # parse args
+  set(option_args STATIC SHARED)
   set(multiple_val_args COMPONENTS)
   set(one_val_args SOURCE_DIR)
   cmake_parse_arguments(FindBoost 
-                        "" "${one_val_args}" "${multiple_val_args}" ${ARGN})
+                        "${option_args}" "${one_val_args}" "${multiple_val_args}" ${ARGN})
 
-  # TODO(bx5a): handle static case
-  add_definitions(-DBOOST_LOG_DYN_LINK)
-  set(boost_link_type shared)
+  # default is static link type
+  set(boost_link_type static)
+  set(Boost_USE_STATIC_LIBS ON)
+  
+  if (${FindBoost_SHARED})
+    add_definitions(-DBOOST_LOG_DYN_LINK)
+    set(boost_link_type shared)
+    set(Boost_USE_STATIC_LIBS OFF)
+  endif()
+
+  # TODO(bx5a): handle runtime_link in parameters
   set(boost_runtime_link_type shared)
 
   # variables 
