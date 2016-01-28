@@ -6,16 +6,16 @@ function(ConfigureMSVC)
 
   # every flags are in these variables
   set(variables
-			CMAKE_C_FLAGS
-			CMAKE_C_FLAGS_DEBUG
-			CMAKE_C_FLAGS_MINSIZEREL
-			CMAKE_C_FLAGS_RELEASE
-			CMAKE_C_FLAGS_RELWITHDEBINFO
-			CMAKE_CXX_FLAGS
-			CMAKE_CXX_FLAGS_DEBUG
-			CMAKE_CXX_FLAGS_MINSIZEREL
-			CMAKE_CXX_FLAGS_RELEASE
-			CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+      CMAKE_C_FLAGS
+      CMAKE_C_FLAGS_DEBUG
+      CMAKE_C_FLAGS_MINSIZEREL
+      CMAKE_C_FLAGS_RELEASE
+      CMAKE_C_FLAGS_RELWITHDEBINFO
+      CMAKE_CXX_FLAGS
+      CMAKE_CXX_FLAGS_DEBUG
+      CMAKE_CXX_FLAGS_MINSIZEREL
+      CMAKE_CXX_FLAGS_RELEASE
+      CMAKE_CXX_FLAGS_RELWITHDEBINFO)
 
   # If we are in static runtime, we need to use /MT or /MTd. Shared: /MD /MDd
   set(option_to_replace "/MT")
@@ -26,13 +26,13 @@ function(ConfigureMSVC)
   endif()
 
   foreach(variable ${variables})
-  	if(${variable} MATCHES ${option_to_replace})
-  		string(REGEX REPLACE
+    if(${variable} MATCHES ${option_to_replace})
+      string(REGEX REPLACE
         ${option_to_replace}
         ${new_option}
         ${variable}
         "${${variable}}")
-  	endif()
+    endif()
     set(${variable} "${${variable}}" PARENT_SCOPE)
   endforeach()
 endfunction(ConfigureMSVC)
