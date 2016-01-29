@@ -80,6 +80,12 @@ function(FindBoost)
     # build
     message(STATUS "Boost - Building")
 
+    # MSVC requires the debug/release version according to build type
+    set(variant_option "")
+    if(MSVC)
+      set(variant_option "variant=debug,release")
+    endif()
+    
     set(boost_b2_options
       ${b2_components}
     	--build-dir=${boost_build_dir}
@@ -87,7 +93,7 @@ function(FindBoost)
       --stagedir=${boost_build_dir}
       link=${boost_link_type}
       runtime-link=${boost_runtime_link_type}
-      variant=debug,release)
+      $variant_option)
 
     execute_process(COMMAND ${boost_b2_command} ${boost_b2_options}
                     WORKING_DIRECTORY ${boost_sources}
