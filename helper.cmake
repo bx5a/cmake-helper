@@ -20,7 +20,7 @@ function(Unpack)
 
     if (NOT EXISTS ${downloaded_path})
       message(STATUS "Unpack - Downloading...")
-      file(DOWNLOAD 
+      file(DOWNLOAD
         ${Unpack_SOURCE}
         ${downloaded_path}
       )
@@ -44,7 +44,7 @@ function(Unpack)
       ERROR_VARIABLE cmd_error
     )
     if(NOT cmd_result EQUAL "0")
-      message(FATAL_ERROR 
+      message(FATAL_ERROR
         "Failed unpacking ${source_filename}:\n${cmd_result}\n${cmd_output}\n${cmd_error}\n")
     endif()
   endif()
@@ -70,7 +70,7 @@ function(AddTarget)
     add_executable(${ARGV0} "${AddTarget_SOURCES}")
   else()
     # for libraries, switch SHARED or STATIC. Default is SHARED
-    if(${add_target_STATIC})
+    if(${AddTarget_STATIC})
       add_library(${ARGV0} STATIC "${AddTarget_SOURCES}")
     else()
       add_library(${ARGV0} SHARED "${AddTarget_SOURCES}")
