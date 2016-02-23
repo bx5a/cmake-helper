@@ -53,6 +53,7 @@ function(FindOpenSSL)
     set(OPENSSL_LIBRARIES 
           "${openssl_build_dir}/lib/libssl${lib_suffix}" 
           "${openssl_build_dir}/lib/libcrypto${lib_suffix}")
+    set(OPENSSL_INCLUDE_DIR "${openssl_sources}/include")
     set(OPENSSL_FOUND TRUE)
     foreach(library ${OPENSSL_LIBRARIES})
       if(NOT EXISTS ${library})
@@ -110,10 +111,18 @@ function(FindOpenSSL)
     # try to build once more
     message(STATUS "OpenSSL - Installed")
     message(WARNING "OpenSSL - You might have to remove CMakeCache.txt and CMakeFiles/ for your new build to be taken into account")
+
+    set(OPENSSL_ROOT_DIR "${openssl_sources}")
+    
     find_package(OpenSSL ${FindOpenSSL_MINIMUM_VERSION})
   endif()
 
   set(OPENSSL_ROOT_DIR "${openssl_sources}" PARENT_SCOPE)
   set(OPENSSL_LIBRARIES "${OPENSSL_LIBRARIES}" PARENT_SCOPE)
+  set(OPENSSL_FOUND "${OPENSSL_FOUND}" PARENT_SCOPE)
+  set(OPENSSL_INCLUDE_DIR "${OPENSSL_INCLUDE_DIR}" PARENT_SCOPE)
+  if (OPENSSL_FOUND) 
+    message(STATUS "OpenSSL Found: ${OPENSSL_LIBRARIES}")
+  endif()
 
 endfunction(FindOpenSSL)
